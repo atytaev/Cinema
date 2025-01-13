@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'styles/book_ticket.css' %}">
+<div class="ticket-container">
+    <h2 class="ticket-header">Бронирование билета на фильм "{{ session.film.title }}"</h2>
+    <p class="ticket-description">Выберите доступное место на сеанс, который начнется {{ session.start_time }}</p>
+
+    {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+
+    <!-- Экран -->
+    <div class="screen-container">
+        <span class="screen-label">Экран</span>
+    </div>
+
+    <!-- Схема зала -->
+    <form method="POST" class="ticket-form">
+        {% csrf_token %}
+        <div class="hall-map">
+            {% for row in seat_rows %}
+                <div class="seat-row">
+                    {% for seat in row %}
+                        <button
+                            type="button"
+                            class="seat {% if seat in booked_seats %}booked{% endif %}"
+                            value="{{ seat }}"
+                            onclick="toggleSeat(this)"
+                            {% if seat in booked_seats %}disabled{% endif %}
+                        >
+                            {{ seat }}
+                        </button>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Скрытое поле для выбранных мест -->
+        <input type="hidden" name="seat_numbers" id="selected-seats">
+        <button type="submit" class="ticket-submit">Забронировать</button>
+    </form>
+</div>
+
+<script>
+    function toggleSeat(button) {
+        const selectedSeatsField = document.getElementById('selected-seats');
+        let selectedSeats = selectedSeatsField.value ? selectedSeatsField.value.split(',') : [];
+
+        const seatNumber = button.value;
+
+        if (button.classList.contains('selected')) {
+            button.classList.remove('selected');
+            selectedSeats = selectedSeats.filter(seat => seat !== seatNumber);
+        } else {
+            button.classList.add('selected');
+            selectedSeats.push(seatNumber);
+        }
+
+        selectedSeatsField.value = selectedSeats.join(',');
+    }
+</script>
+{% endblock %}

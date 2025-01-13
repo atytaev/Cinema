@@ -1,0 +1,237 @@
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+/* Сетка фильмов */
+.movies {
+    padding: 40px 0;
+    background-color: #0f0f0f;
+    width: 100%; /* Делаем ширину 100%, чтобы она адаптировалась */
+    max-width: 1500px; /* Ограничиваем максимальную ширину */
+    margin: 0 auto; /* Центрируем */
+}
+
+.movies h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Карточка фильма */
+.movie-card {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;         /* Сделать карточку гибкой */
+    max-width: 550px;    /* Ограничиваем максимальную ширину карточки */
+    height: 600px;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+/* Изображение фильма */
+.movie-card img {
+    width: 60%;         /* Изображение заполняет карточку */
+    height: 60%;        /* Высота подстраивается */
+    object-fit: contain;   /* Обрезает изображение, чтобы заполнить карточку */
+    transform: translateX(10px); /* Сдвигаем изображение правее */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Плавный переход для анимации */
+}
+
+.movie-card:hover img {
+    transform: translateX(15px) scale(1.1); /* При наведении сдвигаем ещё правее и увеличиваем */
+    opacity: 0.9;                          /* Добавляем небольшой эффект прозрачности */
+}
+/* Слой затемнения */
+.movie-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card:hover::after {
+    opacity: 1;
+}
+
+/* Информация о фильме */
+.movie-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.movie-info h3 {
+    font-size: 1.6rem;
+    color: #f44336;
+    margin-bottom: 10px;
+}
+
+.movie-info p {
+    font-size: 1rem;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+/* Кнопки */
+.action-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .action-buttons {
+    opacity: 1;
+}
+
+.action-buttons .btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons .btn:hover {
+    background-color: #e53935;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .movies-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .movie-info h3 {
+        font-size: 1.4rem;
+    }
+
+    .movie-info p {
+        font-size: 0.9rem;
+    }
+
+    .action-buttons .btn {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
+
+/* Фильтр */
+.content-wrapper {
+    display: flex;
+    gap: 70px;
+    padding: 80px;
+}
+
+.filters {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    height: 650px;
+    flex-shrink: 0;
+}
+
+.filters h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #f44336;
+    text-align: center;
+}
+
+.filters label {
+    font-size: 1.2rem;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filters input,
+.filters select {
+    width: 100%;
+    padding: 5px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.filters input::placeholder {
+    font-size: 1rem;
+    color: #888;
+}
+
+.filter-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.filter-btn:hover {
+    background-color: #e53935;
+}
+
+/* Футер */
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #bbb;
+}
+
+.footer a {
+    color: #f44336;
+    text-decoration: none;
+}
